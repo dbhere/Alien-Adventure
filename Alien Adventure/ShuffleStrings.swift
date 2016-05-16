@@ -24,6 +24,9 @@ extension Hero {
                 s1Index = s1Index.successor()
             } else if s2Index != s2.endIndex && s2[s2Index] == shuffle[shuffleIndex]{
                 s2Index = s2Index.successor()
+            } else {
+                //shuffle中存在s1,s2没有的元素
+                return false
             }
             shuffleIndex = shuffleIndex.successor()
         }
