@@ -11,7 +11,27 @@ import Foundation
 extension Hero {
     
     func bannedItems(dataFile: String) -> [Int] {
-        return [Int]()
+        let dataFileUrl = NSBundle.mainBundle().URLForResource(dataFile, withExtension: "plist")!
+        let itemArray = NSArray(contentsOfURL: dataFileUrl)!
+        
+        var itemsToBeBaned = [Int]()
+        for item in itemArray{
+            guard let name = item["Name"] as? String where name.lowercaseString.containsString("laser") else {
+                continue
+            }
+            guard let historicalData = item["HistoricalData"] as? [String: AnyObject] else {
+                continue
+            }
+            guard let age = historicalData["CarbonAge"] as? Int where age < 30 else {
+                continue
+            }
+            guard let numberId = item["ItemID"] as? Int else {
+                continue
+            }
+            itemsToBeBaned.append(numberId)
+        }
+        
+        return itemsToBeBaned
     }
 }
 
